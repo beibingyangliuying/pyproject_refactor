@@ -1,0 +1,4 @@
+*.pyc
+操作示例/
+resources/
+*.log
