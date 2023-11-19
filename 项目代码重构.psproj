@@ -21,8 +21,12 @@ FileName=$[Project-Path]data_context\__init__.py
 ClassName=TProjectFileNode
 FileName=$[Project-Path]data_context\project_structure.py
 
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node2]
+ClassName=TProjectFileNode
+FileName=$[Project-Path]data_context\rename_context.py
+
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
-Count=2
+Count=3
 
 [Project\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFolderNode
@@ -38,29 +42,25 @@ FileName=$[Project-Path]ui\mainwindow.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node2]
 ClassName=TProjectFileNode
+FileName=$[Project-Path]ui\rename_dialog.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node3]
+ClassName=TProjectFileNode
 FileName=$[Project-Path]ui\ui_mainwindow.py
 
+[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node4]
+ClassName=TProjectFileNode
+FileName=$[Project-Path]ui\ui_rename_dialog.py
+
 [Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes]
-Count=3
+Count=5
 
 [Project\ChildNodes\Node0\ChildNodes\Node2]
 ClassName=TProjectFileNode
 FileName=$[Project-Path]main.py
 
-[Project\ChildNodes\Node0\ChildNodes\Node3]
-ClassName=TProjectFileNode
-FileName=$[Project-Path]rename.py
-
-[Project\ChildNodes\Node0\ChildNodes\Node4]
-ClassName=TProjectFileNode
-FileName=$[Project-Path]test.py
-
-[Project\ChildNodes\Node0\ChildNodes\Node5]
-ClassName=TProjectFileNode
-FileName=$[Project-Path]utils.py
-
 [Project\ChildNodes\Node0\ChildNodes]
-Count=6
+Count=3
 
 [Project\ChildNodes\Node1]
 ClassName=TProjectRunConfiguationsNode
@@ -77,7 +77,7 @@ ReinitializeBeforeRun=TRUE
 WorkingDir=$[ActiveScript-Dir]
 WriteOutputToFile=TRUE
 OutputFileName=$[ActiveScript-NoExt].log
-AppendToFile=TRUE
+AppendToFile=FALSE
 
 [Project\ChildNodes\Node1\ChildNodes\Node0\RunConfig\ExternalRun]
 Caption=External Run
