@@ -19,14 +19,18 @@ FileName=$[Project-Path]data_context\__init__.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]data_context\project_structure.py
+FileName=$[Project-Path]data_context\move_context.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node2]
+ClassName=TProjectFileNode
+FileName=$[Project-Path]data_context\project_structure.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node3]
 ClassName=TProjectFileNode
 FileName=$[Project-Path]data_context\rename_context.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
-Count=3
+Count=4
 
 [Project\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFolderNode

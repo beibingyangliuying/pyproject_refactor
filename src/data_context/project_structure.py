@@ -15,6 +15,7 @@ Build the project file structure.
 
 import os
 import logging
+import rope.base.libutils as libutils
 from rope.base.project import Project
 from rope.base.exceptions import ResourceNotFoundError
 from rope.base.resources import Resource
@@ -92,7 +93,8 @@ class ProjectStructure:
                 children = (
                     child
                     for child in resource.get_children()
-                    if child.is_folder() or child.name.endswith(r".py")
+                    if child.is_folder()
+                    or libutils.is_python_file(self._project, child)
                 )  # Use the generator here.
             else:
                 return

@@ -22,7 +22,9 @@ class RenameContext:
     """
 
     def __init__(self, project: Project, resource: Resource, offset=None, new_name=""):
-        self._executor = Rename(project, resource, offset)
+        self._executor = Rename(
+            project, resource, offset
+        )  # May throw `BadIdentifierError` exception.
         self._new_name = new_name
 
     def execute(self):
