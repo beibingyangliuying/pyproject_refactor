@@ -23,7 +23,7 @@ from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
 
 
-class ProjectStructure:
+class ProjectStructuree:
     """
     The class that builds the structure of the project file.
     """

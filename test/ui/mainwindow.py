@@ -21,7 +21,7 @@ from PyQt6.QtCore import QModelIndex, pyqtSlot, Qt
 from rope.base.exceptions import BadIdentifierError
 from ui.ui_mainwindow import Ui_MainWindow
 from ui.rename_dialog import RenameDialog
-from context import ProjectStructure
+from context import ProjectStructuree
 
 
 class MainWindow(QMainWindow):
@@ -38,7 +38,7 @@ class MainWindow(QMainWindow):
 
         # Initialize data context
         cwd = os.getcwd()
-        self._context = ProjectStructure(cwd)
+        self._context = ProjectStructuree(cwd)
         logging.info("Initialize the current working directory: %s.", cwd)
 
         # Perform data binding

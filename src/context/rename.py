@@ -31,12 +31,24 @@ class RenameContext:
         """
         Execute the refactor of renaming.
         """
-        return self.changes.do()
+        return self._changes.do()
+
+    def _get_new_name(self):
+        return self._new_name
 
     def _set_new_name(self, new_name):
         self._new_name = new_name
 
-    description = property(lambda self: self.changes.get_description())
-    new_name = property(lambda self: self._new_name, _set_new_name)
-    changes = property(lambda self: self._executor.get_changes(self._new_name))
-    module_name = property(lambda self: self._executor.resource.path)
+    def _get_description(self):
+        return self._changes.get_description()
+
+    def _get_changes(self):
+        return self._executor.get_changes(self._new_name)
+
+    def _get_module_name(self):
+        return self._executor.resource.path
+
+    description = property(_get_description)
+    new_name = property(_get_new_name, _set_new_name)
+    _changes = property(_get_changes)
+    module_name = property(_get_module_name)

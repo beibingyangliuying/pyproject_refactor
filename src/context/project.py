@@ -15,7 +15,8 @@ Build the project file structure.
 
 import os
 import logging
-import rope.base.libutils as libutils
+import re
+from rope.base import libutils
 from rope.base.project import Project
 from rope.base.exceptions import ResourceNotFoundError
 from rope.base.resources import Resource
@@ -23,10 +24,12 @@ from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from PyQt6.QtCore import Qt
 
 
-class ProjectStructure:
+class ProjectContext:
     """
     The class that builds the structure of the project file.
     """
+
+    _pattern = re.compile(r"^(__.+__)$")
 
     def __init__(self, path: str):
         self._project = Project(path)  # Not intended to handle exceptions here.
@@ -52,7 +55,7 @@ class ProjectStructure:
         except ResourceNotFoundError as exception:
             logging.warning(str(exception))
             self._project.validate()
-            return self._project.root
+            return self._project.root  # Does return root directory cause ambiguity?
 
     def validate(self):
         """
@@ -63,7 +66,7 @@ class ProjectStructure:
         """
         self._project.validate()
 
-    def set_root_directory(self, path):
+    def set_root_directory(self, path: str):
         """
         Set the project root path.
 
@@ -77,13 +80,46 @@ class ProjectStructure:
         self._project.close()  # Close previous project
         self._project = Project(path)
 
-    def _get_project(self):
+    @property
+    def project(self):
+        """
+        The project itself.
+        """
         return self._project
 
-    def _get_model(self) -> QStandardItemModel:
+    @property
+    def root(self):
+        """
+        The resource represented by the project root directory.
+        """
+        return self._project.root
+
+    @property
+    def address(self):
+        """
+        The actual path to the project root directory.
+        """
+        return self._project.address
+
+    @property
+    def model(self) -> QStandardItemModel:
         """
         Build the project tree.
+
+        Returns:
+            Returns a tree-like QStandardItemModel.
         """
+
+        def validate(resource: Resource):
+            """
+            Verify if a .py file or package.
+            """
+            if resource.is_folder():
+                if re.match(self._pattern, resource.name):
+                    return False
+                return True
+
+            return libutils.is_python_file(self._project, resource)
 
         def recursive_traversal(resource: Resource, root_item: QStandardItem):
             """
@@ -91,10 +127,7 @@ class ProjectStructure:
             """
             if resource.is_folder():
                 children = (
-                    child
-                    for child in resource.get_children()
-                    if child.is_folder()
-                    or libutils.is_python_file(self._project, child)
+                    child for child in resource.get_children() if validate(child)
                 )  # Use the generator here.
             else:
                 return
@@ -116,8 +149,3 @@ class ProjectStructure:
         recursive_traversal(root_resource, root_item)
 
         return model
-
-    model = property(_get_model)
-    project = property(_get_project)
-    address = property(lambda self: self._project.address)
-    root = property(lambda self: self._project.root)

@@ -25,12 +25,8 @@ FileName=$[Project-Path]context\move.py
 ClassName=TProjectFileNode
 FileName=$[Project-Path]context\project.py
 
-[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node3]
-ClassName=TProjectFileNode
-FileName=$[Project-Path]context\rename.py
-
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
-Count=4
+Count=3
 
 [Project\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFolderNode
