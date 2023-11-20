@@ -11,23 +11,23 @@ ClassName=TProjectFilesNode
 
 [Project\ChildNodes\Node0\ChildNodes\Node0]
 ClassName=TProjectFolderNode
-Name=data_context
+Name=context
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]data_context\__init__.py
+FileName=$[Project-Path]context\__init__.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]data_context\move_context.py
+FileName=$[Project-Path]context\move.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node2]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]data_context\project_structure.py
+FileName=$[Project-Path]context\project.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node3]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]data_context\rename_context.py
+FileName=$[Project-Path]context\rename.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
 Count=4
@@ -74,7 +74,7 @@ ClassName=TProjectRunConfiguationNode
 Name=启动主程序
 
 [Project\ChildNodes\Node1\ChildNodes\Node0\RunConfig]
-ScriptName=H:\BaiduSyncdisk\Python\pyproject_refactor\main.py
+ScriptName=H:\BaiduSyncdisk\Python\pyproject_refactor\src\main.py
 Description=启动主程序
 EngineType=peRemote
 ReinitializeBeforeRun=TRUE
@@ -90,27 +90,8 @@ ApplicationName=$[PythonExe-Short]
 Parameters=$[ActiveScript-Short]
 WorkingDirectory=$[ActiveScript-Dir]
 
-[Project\ChildNodes\Node1\ChildNodes\Node1]
-ClassName=TProjectRunConfiguationNode
-Name=单元测试
-
-[Project\ChildNodes\Node1\ChildNodes\Node1\RunConfig]
-EngineType=peRemote
-ReinitializeBeforeRun=TRUE
-WorkingDir=$[ActiveScript-Dir]
-WriteOutputToFile=FALSE
-OutputFileName=$[ActiveScript-NoExt].log
-AppendToFile=FALSE
-
-[Project\ChildNodes\Node1\ChildNodes\Node1\RunConfig\ExternalRun]
-Caption=External Run
-Description=Run script using an external Python Interpreter
-ApplicationName=$[PythonExe-Short]
-Parameters=$[ActiveScript-Short]
-WorkingDirectory=$[ActiveScript-Dir]
-
 [Project\ChildNodes\Node1\ChildNodes]
-Count=2
+Count=1
 
 [Project\ChildNodes]
 Count=2

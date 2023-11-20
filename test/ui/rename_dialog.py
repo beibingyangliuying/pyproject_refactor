@@ -59,18 +59,9 @@ class RenameDialog(QDialog):
             return
 
         self._context.new_name = self._ui.lineEdit_new_name.text()
-
-        try:
-            self._context.execute()
-            self.close()
-            logging.info("Rename in %s executed.", self._context.module_name)
-        except PermissionError as exception:
-            QMessageBox.warning(
-                self,
-                "warning",
-                str(exception),
-                QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.No,
-            )
+        self._context.execute()
+        self.close()
+        logging.info("Rename in %s executed.", self._context.module_name)
 
     @pyqtSlot()
     def cancel(self):
@@ -81,7 +72,4 @@ class RenameDialog(QDialog):
 
     @pyqtSlot()
     def slot_set_new_name(self):
-        """
-        Re-data binding when assigning a new name to the element.
-        """
         self._reset_binding()
