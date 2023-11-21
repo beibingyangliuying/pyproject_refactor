@@ -1,5 +1,5 @@
 """
-Lists the APIs provided by the this package.
+Window class that handles the interaction logic.
 """
 
 from ui.mainwindow import MainWindow

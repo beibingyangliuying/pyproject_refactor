@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>837</width>
+    <height>604</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>837</width>
+    <height>604</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>837</width>
+    <height>604</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>PyProject Refactor</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>13</x>
+      <y>10</y>
+      <width>811</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_central" stretch="1,2">
+     <property name="spacing">
+      <number>20</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_project" stretch="1,20">
+       <item>
+        <widget class="QLabel" name="label_project">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Project Structure</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTreeView" name="treeView_project">
+         <property name="headerHidden">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_source" stretch="1,1,20">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_root">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <item>
+          <widget class="QPushButton" name="pushButton_root">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Root Directory</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_root">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_source_code">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Module Source Code</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="plainTextEdit_source_code">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="lineWrapMode">
+          <enum>QPlainTextEdit::NoWrap</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>837</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHistory">
+    <property name="title">
+     <string>History</string>
+    </property>
+    <addaction name="action_undo"/>
+    <addaction name="action_history"/>
+   </widget>
+   <widget class="QMenu" name="menuRefactor">
+    <property name="title">
+     <string>Refactor</string>
+    </property>
+    <addaction name="action_rename"/>
+    <addaction name="action_move"/>
+    <addaction name="action_restructure"/>
+    <addaction name="action_extract"/>
+    <addaction name="actionin_line"/>
+    <addaction name="action_usefunction"/>
+    <addaction name="action_method_object"/>
+    <addaction name="action_change_signature"/>
+    <addaction name="action_introduce_factory"/>
+    <addaction name="action_introduce_parameter"/>
+    <addaction name="action_encapsulate_field"/>
+    <addaction name="action_localtofield"/>
+    <addaction name="action_topackage"/>
+    <addaction name="action_importutils"/>
+   </widget>
+   <addaction name="menuHistory"/>
+   <addaction name="menuRefactor"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_history">
+   <property name="text">
+    <string>history</string>
+   </property>
+  </action>
+  <action name="action_undo">
+   <property name="text">
+    <string>undo</string>
+   </property>
+  </action>
+  <action name="action_rename">
+   <property name="text">
+    <string>rename</string>
+   </property>
+   <property name="toolTip">
+    <string>Rename something in the project.</string>
+   </property>
+  </action>
+  <action name="action_move">
+   <property name="text">
+    <string>move</string>
+   </property>
+   <property name="toolTip">
+    <string>Move a python element in the project.</string>
+   </property>
+  </action>
+  <action name="action_restructure">
+   <property name="text">
+    <string>restructure</string>
+   </property>
+   <property name="toolTip">
+    <string>Restructure code.</string>
+   </property>
+  </action>
+  <action name="action_extract">
+   <property name="text">
+    <string>extract</string>
+   </property>
+   <property name="toolTip">
+    <string>Extract methods/variables.</string>
+   </property>
+  </action>
+  <action name="actionin_line">
+   <property name="text">
+    <string>inline</string>
+   </property>
+   <property name="toolTip">
+    <string>Inline occurrences of a method/variable/parameter.</string>
+   </property>
+  </action>
+  <action name="action_usefunction">
+   <property name="text">
+    <string>usefunction</string>
+   </property>
+   <property name="toolTip">
+    <string>Try to use a function wherever possible.</string>
+   </property>
+  </action>
+  <action name="action_method_object">
+   <property name="text">
+    <string>method_object</string>
+   </property>
+   <property name="toolTip">
+    <string>Transform a function or a method to a method object.</string>
+   </property>
+  </action>
+  <action name="action_change_signature">
+   <property name="text">
+    <string>change_signature</string>
+   </property>
+   <property name="toolTip">
+    <string>Change the signature of a function/method.</string>
+   </property>
+  </action>
+  <action name="action_introduce_factory">
+   <property name="text">
+    <string>introduce_factory</string>
+   </property>
+   <property name="toolTip">
+    <string>Introduce a factory for a class and changes all constructors to use it.</string>
+   </property>
+  </action>
+  <action name="action_introduce_parameter">
+   <property name="text">
+    <string>introduce_parameter</string>
+   </property>
+   <property name="toolTip">
+    <string>Introduce a parameter in a function.</string>
+   </property>
+  </action>
+  <action name="action_encapsulate_field">
+   <property name="text">
+    <string>encapsulate_field</string>
+   </property>
+   <property name="toolTip">
+    <string>Generate a getter/setter for a field and changes its occurrences to use them.</string>
+   </property>
+  </action>
+  <action name="action_localtofield">
+   <property name="text">
+    <string>localtofield</string>
+   </property>
+   <property name="toolTip">
+    <string>Change a local variable to field.</string>
+   </property>
+  </action>
+  <action name="action_topackage">
+   <property name="text">
+    <string>topackage</string>
+   </property>
+   <property name="toolTip">
+    <string>Transform a module to a package with the same name.</string>
+   </property>
+  </action>
+  <action name="action_importutils">
+   <property name="text">
+    <string>importutils</string>
+   </property>
+   <property name="toolTip">
+    <string>Perform actions like organize imports.</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_root</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>slot_assign_root()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_rename</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>slot_rename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeView_project</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>slot_show_source_code(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>318</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>slot_assign_root()</slot>
+  <slot>slot_rename()</slot>
+  <slot>slot_show_source_code(QModelIndex)</slot>
+ </slots>
+</ui>
