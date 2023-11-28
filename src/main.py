@@ -11,9 +11,11 @@
 """
 Application Main Entrance.
 """
-import sys
 import logging
+import sys
+
 from PyQt6.QtWidgets import QApplication
+
 from ui.mainwindow import MainWindow
 
 # Configure the logging module

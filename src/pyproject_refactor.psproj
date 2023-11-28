@@ -11,53 +11,53 @@ ClassName=TProjectFilesNode
 
 [Project\ChildNodes\Node0\ChildNodes\Node0]
 ClassName=TProjectFolderNode
-Name=context
+Name=ui
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0]
+ClassName=TProjectFolderNode
+Name=custom_controls
+
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]context\__init__.py
+FileName=$[Project-Path]ui\custom_controls\__init__.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
+ClassName=TProjectFileNode
+FileName=$[Project-Path]ui\custom_controls\project_tree_view.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
+Count=2
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]context\move.py
+FileName=$[Project-Path]ui\__init__.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node2]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]context\project.py
-
-[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
-Count=3
-
-[Project\ChildNodes\Node0\ChildNodes\Node1]
-ClassName=TProjectFolderNode
-Name=ui
-
-[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node0]
-ClassName=TProjectFileNode
-FileName=$[Project-Path]ui\__init__.py
-
-[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node1]
-ClassName=TProjectFileNode
 FileName=$[Project-Path]ui\mainwindow.py
 
-[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node2]
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node3]
 ClassName=TProjectFileNode
 FileName=$[Project-Path]ui\rename_dialog.py
 
-[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node3]
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node4]
 ClassName=TProjectFileNode
 FileName=$[Project-Path]ui\ui_mainwindow.py
 
-[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes\Node4]
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node5]
 ClassName=TProjectFileNode
 FileName=$[Project-Path]ui\ui_rename_dialog.py
 
-[Project\ChildNodes\Node0\ChildNodes\Node1\ChildNodes]
-Count=5
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
+Count=6
+
+[Project\ChildNodes\Node0\ChildNodes\Node1]
+ClassName=TProjectFileNode
+FileName=$[Project-Path]main.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node2]
 ClassName=TProjectFileNode
-FileName=$[Project-Path]main.py
+FileName=$[Project-Path]utilities.py
 
 [Project\ChildNodes\Node0\ChildNodes]
 Count=3

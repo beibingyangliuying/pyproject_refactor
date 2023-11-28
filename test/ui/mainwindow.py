@@ -15,13 +15,17 @@ Main interface.
 
 import logging
 import os
-from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox
-from PyQt6.QtCore import QModelIndex, pyqtSlot, Qt
+from typing import Union
 
-from rope.base.exceptions import BadIdentifierError
-from ui.ui_mainwindow import Ui_MainWindow
+from PyQt6.QtCore import QModelIndex, pyqtSlot, Qt
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from rope.base.exceptions import BadIdentifierError, ResourceNotFoundError
+from rope.base.project import Project
+from rope.base.resources import Resource
+
 from ui.rename_dialog import RenameDialog
-from context import ProjectStructuree
+from ui.ui_mainwindow import Ui_MainWindow
+from utilities import get_project_model
 
 
 class MainWindow(QMainWindow):
@@ -38,21 +42,28 @@ class MainWindow(QMainWindow):
 
         # Initialize data context
         cwd = os.getcwd()
-        self._context = ProjectStructuree(cwd)
+        self._project = Project(cwd)
         logging.info("Initialize the current working directory: %s.", cwd)
 
         # Perform data binding
         self._reset_binding()
 
     def _reset_binding(self):
-        self._ui.lineEdit_root.setText(self._context.address)
-        self._ui.treeView_project.setModel(self._context.model)
+        self._project.validate()
+
+        self._ui.lineEdit_root.setText(self._project.address)
+        self._ui.treeView_project.setModel(get_project_model(self._project.root))
         self._ui.plainTextEdit_source_code.clear()
+
         logging.info("Class %s: Perform data binding.", MainWindow)
 
-    def _get_resource(self, index: QModelIndex):
+    def _get_resource(self, index: QModelIndex) -> Resource:
         """
-        Search for resource.
+        Get a resource in a project.
+
+        Returns:
+            Returns a valid resource, or the root directory if the resource
+            it is trying to find does not exist.
 
         Raises:
             ValueError: Thrown when the QModelIndex object is not valid.
@@ -63,83 +74,101 @@ class MainWindow(QMainWindow):
         view = self._ui.treeView_project
         model = view.model()
         resource_path = model.data(index, role=Qt.ItemDataRole.ToolTipRole)
-        resource = self._context.get_resource(resource_path)
-        return resource
+
+        try:
+            resource = self._project.get_resource(resource_path)
+            return resource
+        except ResourceNotFoundError as exception:
+            logging.warning(str(exception))
+            return self._project.root
+
+    def _get_offset(self) -> Union[None, int]:
+        text_edit = self._ui.plainTextEdit_source_code
+        if not text_edit.hasFocus():
+            offset = None
+        else:
+            cursor = text_edit.textCursor()
+            offset = cursor.selectionStart()
+        return offset
 
     @pyqtSlot()
     def slot_assign_root(self):
         """
-        Set up the root directory of the project.
+        Reset the project root path.
+        If the root path is reset, the operation history will be erased.
         """
+        result = QMessageBox.question(
+            self,
+            "Question",
+            "The history will be erased after resetting the root directory, continue?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+        )
+        if result == QMessageBox.StandardButton.No:
+            return
+
         folder_path = QFileDialog.getExistingDirectory(
-            self, "Select Root Directory", directory=self._context.address
+            self, "Select Root Directory", directory=self._project.address
         )
 
         if folder_path:
             logging.info("Set Root Directory: %s", folder_path)
 
-            self._context.set_root_directory(folder_path)
+            self._project = Project(folder_path)
             self._reset_binding()
 
     @pyqtSlot(QModelIndex)
     def slot_show_source_code(self, index: QModelIndex):
         """
         Display the source code of the selected module.
+        If a folder is selected, the source code will be blank.
         """
         resource = self._get_resource(index)
+        text_edit = self._ui.plainTextEdit_source_code
 
         # Validate resource
-        if resource == self._context.root:
+        if resource == self._project.root:
             QMessageBox.warning(
                 self,
-                "warning",
-                "Ineffective resources! The root directory has been revalidated!",
+                "Warning",
+                "Ineffective resources! The project has been revalidated!",
                 QMessageBox.StandardButton.Ok,
             )
             self._reset_binding()
         elif resource.is_folder():
             logging.info("Folder %s selected.", resource.real_path)
-            self._ui.plainTextEdit_source_code.clear()
+            text_edit.clear()
         else:
             logging.info("Read the contents of the module %s.", resource.real_path)
-            self._ui.plainTextEdit_source_code.setPlainText(resource.read())
+            text_edit.setPlainText(resource.read())
 
     @pyqtSlot()
     def slot_rename(self):
         """
         Execute renaming.
         """
+        # Determine resource.
+        index = self._ui.treeView_project.currentIndex()
+        resource = self._get_resource(index)
+
         # Determine offset.
-        text_edit = self._ui.plainTextEdit_source_code
-        if not text_edit.hasFocus():
+        offset = self._get_offset()
+        if offset is None:
             result = QMessageBox.question(
                 self,
-                "question",
-                "No element is selected, the module will be renamed next, continue?",
+                "Question",
+                f"No element selected, the module <{resource.path}> will be renamed, continue?",
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             )
 
             if result == QMessageBox.StandardButton.No:
                 return
 
-            offset = None
-        else:
-            cursor = text_edit.textCursor()
-            offset = cursor.selectionStart()
-
-        # Determine resource.
-        index = self._ui.treeView_project.currentIndex()
-        resource = self._get_resource(index)
-
         # Show dialog.
         try:
-            dialog = RenameDialog(self, self._context.project, resource, offset)
+            dialog = RenameDialog(self, self._project, resource, offset)
+            dialog.exec()
         except BadIdentifierError as exception:
-            QMessageBox.warning(self, "warning", str(exception))
+            QMessageBox.warning(self, "Warning", str(exception))
             return
-
-        dialog.exec()
-
-        # Clean up.
-        self._context.validate()
-        self._reset_binding()
+        finally:
+            self._reset_binding()

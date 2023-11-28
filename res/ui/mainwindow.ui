@@ -71,6 +71,9 @@
        </item>
        <item>
         <widget class="QTreeView" name="treeView_project">
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragDrop</enum>
+         </property>
          <property name="headerHidden">
           <bool>true</bool>
          </property>

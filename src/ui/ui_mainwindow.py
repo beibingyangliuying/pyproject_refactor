@@ -45,6 +45,7 @@ class Ui_MainWindow(object):
         self.label_project.setObjectName("label_project")
         self.verticalLayout_project.addWidget(self.label_project)
         self.treeView_project = QtWidgets.QTreeView(parent=self.layoutWidget)
+        self.treeView_project.setDragDropMode(QtWidgets.QAbstractItemView.DragDropMode.DragDrop)
         self.treeView_project.setHeaderHidden(True)
         self.treeView_project.setObjectName("treeView_project")
         self.verticalLayout_project.addWidget(self.treeView_project)

@@ -12,6 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
+        Dialog.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
         Dialog.resize(628, 537)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -69,7 +70,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Rename"))
         self.label_module.setText(_translate("Dialog", "Module"))
         self.label_new_name.setText(_translate("Dialog", "New Name"))
         self.label.setText(_translate("Dialog", "Preview"))

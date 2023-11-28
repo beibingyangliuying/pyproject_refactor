@@ -54,7 +54,7 @@ class RenameDialog(QDialog):
         # Confirms whether to perform refactoring.
         result = QMessageBox.question(
             self,
-            "question",
+            "Question",
             "Confirm refactoring?",
             QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.No,
         )
@@ -68,7 +68,7 @@ class RenameDialog(QDialog):
         except PermissionError as exception:
             QMessageBox.warning(
                 self,
-                "warning",
+                "Warning",
                 str(exception),
                 QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.No,
             )

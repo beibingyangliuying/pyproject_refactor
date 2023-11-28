@@ -12,10 +12,14 @@ The rename feature has now been implemented.
 
 # Software Interface
 
-mainwindow:
+Below are the completed and tested features(interfaces) ,I have provided the `test` folder for you to test. 
+
+## mainwindow
 
 ![](pic/mainwindow.png)
 
-rename:
+---
+
+## rename
 
 ![](pic/rename.png)
