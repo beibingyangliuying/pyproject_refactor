@@ -72,7 +72,7 @@
        <item>
         <widget class="QTreeView" name="treeView_project">
          <property name="dragDropMode">
-          <enum>QAbstractItemView::DragDrop</enum>
+          <enum>QAbstractItemView::NoDragDrop</enum>
          </property>
          <property name="headerHidden">
           <bool>true</bool>
@@ -318,7 +318,7 @@
    <sender>pushButton_root</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>slot_assign_root()</slot>
+   <slot>set_project()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>342</x>
@@ -334,7 +334,7 @@
    <sender>action_rename</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
-   <slot>slot_rename()</slot>
+   <slot>identifier_refactor()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -350,7 +350,7 @@
    <sender>treeView_project</sender>
    <signal>clicked(QModelIndex)</signal>
    <receiver>MainWindow</receiver>
-   <slot>slot_show_source_code(QModelIndex)</slot>
+   <slot>show_source_code(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>140</x>
@@ -362,10 +362,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_move</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>identifier_refactor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>slot_assign_root()</slot>
-  <slot>slot_rename()</slot>
-  <slot>slot_show_source_code(QModelIndex)</slot>
+  <slot>set_project()</slot>
+  <slot>show_source_code(QModelIndex)</slot>
+  <slot>identifier_refactor()</slot>
  </slots>
 </ui>

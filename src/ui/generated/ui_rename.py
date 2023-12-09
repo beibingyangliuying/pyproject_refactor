@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'rename_dialog.ui'
+# Form implementation generated from reading ui file 'rename.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.2
 #
@@ -50,9 +50,15 @@ class Ui_Dialog(object):
         self.lineEdit_new_name.setObjectName("lineEdit_new_name")
         self.horizontalLayout_new_name.addWidget(self.lineEdit_new_name)
         self.verticalLayout.addLayout(self.horizontalLayout_new_name)
-        self.label = QtWidgets.QLabel(parent=self.layoutWidget)
-        self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.label)
+        self.horizontalLayout_preview = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_preview.setObjectName("horizontalLayout_preview")
+        self.label_preview = QtWidgets.QLabel(parent=self.layoutWidget)
+        self.label_preview.setObjectName("label_preview")
+        self.horizontalLayout_preview.addWidget(self.label_preview)
+        self.checkBox = QtWidgets.QCheckBox(parent=self.layoutWidget)
+        self.checkBox.setObjectName("checkBox")
+        self.horizontalLayout_preview.addWidget(self.checkBox)
+        self.verticalLayout.addLayout(self.horizontalLayout_preview)
         self.plainTextEdit = QtWidgets.QPlainTextEdit(parent=self.layoutWidget)
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -65,12 +71,14 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
         self.buttonBox.accepted.connect(Dialog.accept) # type: ignore
         self.buttonBox.rejected.connect(Dialog.reject) # type: ignore
-        self.lineEdit_new_name.editingFinished.connect(Dialog.slot_set_new_name) # type: ignore
+        self.lineEdit_new_name.editingFinished.connect(Dialog.preview) # type: ignore
+        self.checkBox.clicked.connect(Dialog.preview) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Rename"))
-        self.label_module.setText(_translate("Dialog", "Module"))
+        self.label_module.setText(_translate("Dialog", "Module/Package"))
         self.label_new_name.setText(_translate("Dialog", "New Name"))
-        self.label.setText(_translate("Dialog", "Preview"))
+        self.label_preview.setText(_translate("Dialog", "Preview"))
+        self.checkBox.setText(_translate("Dialog", "Include Strings And Comments"))

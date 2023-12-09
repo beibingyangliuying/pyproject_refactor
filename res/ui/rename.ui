@@ -56,7 +56,7 @@
       <item>
        <widget class="QLabel" name="label_module">
         <property name="text">
-         <string>Module</string>
+         <string>Module/Package</string>
         </property>
        </widget>
       </item>
@@ -88,11 +88,22 @@
      </layout>
     </item>
     <item>
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Preview</string>
-      </property>
-     </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_preview">
+      <item>
+       <widget class="QLabel" name="label_preview">
+        <property name="text">
+         <string>Preview</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox">
+        <property name="text">
+         <string>Include Strings And Comments</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
     <item>
      <widget class="QPlainTextEdit" name="plainTextEdit">
@@ -148,7 +159,7 @@
    <sender>lineEdit_new_name</sender>
    <signal>editingFinished()</signal>
    <receiver>Dialog</receiver>
-   <slot>slot_set_new_name()</slot>
+   <slot>preview()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>307</x>
@@ -160,8 +171,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>preview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>398</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>313</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>slot_set_new_name()</slot>
+  <slot>preview()</slot>
  </slots>
 </ui>

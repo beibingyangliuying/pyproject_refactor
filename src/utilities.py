@@ -11,8 +11,6 @@
 """
 Provides commonly used utilities.
 """
-
-
 import re
 
 from PyQt6.QtCore import Qt
@@ -23,7 +21,7 @@ from rope.base.resources import Resource
 
 def is_validate_resource(resource: Resource) -> bool:
     """
-    Verify if `resource` is a python file or folder.
+    Verify if `resource` is a python file or valid folder.
     Folders starting and ending with `__` will be ignored.
     """
     if resource.is_folder():

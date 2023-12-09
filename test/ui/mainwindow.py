@@ -12,18 +12,15 @@
 """
 Main interface.
 """
-
 import logging
 import os
 from typing import Union
-
 from PyQt6.QtCore import QModelIndex, pyqtSlot, Qt
 from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from rope.base.exceptions import BadIdentifierError, ResourceNotFoundError
 from rope.base.project import Project
 from rope.base.resources import Resource
-
-from ui.rename_dialog import RenameDialog
+from ui.rename import RenameDialog
 from ui.ui_mainwindow import Ui_MainWindow
 from utilities import get_project_model
 

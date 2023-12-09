@@ -15,8 +15,8 @@ import logging
 import sys
 
 from PyQt6.QtWidgets import QApplication
+import ui.mainwindow
 
-from ui.mainwindow import MainWindow
 
 # Configure the logging module
 logging.basicConfig(filename="main.log", level=logging.DEBUG)
@@ -27,7 +27,7 @@ def main():
     Application Main Entrance.
     """
     app = QApplication(sys.argv)
-    mainwindow = MainWindow()
+    mainwindow = ui.mainwindow.MainWindow()
     mainwindow.show()
     app.exec()
 

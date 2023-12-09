@@ -45,7 +45,7 @@ class Ui_MainWindow(object):
         self.label_project.setObjectName("label_project")
         self.verticalLayout_project.addWidget(self.label_project)
         self.treeView_project = QtWidgets.QTreeView(parent=self.layoutWidget)
-        self.treeView_project.setDragDropMode(QtWidgets.QAbstractItemView.DragDropMode.DragDrop)
+        self.treeView_project.setDragDropMode(QtWidgets.QAbstractItemView.DragDropMode.NoDragDrop)
         self.treeView_project.setHeaderHidden(True)
         self.treeView_project.setObjectName("treeView_project")
         self.verticalLayout_project.addWidget(self.treeView_project)
@@ -161,9 +161,10 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuRefactor.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.pushButton_root.clicked.connect(MainWindow.slot_assign_root) # type: ignore
-        self.action_rename.triggered.connect(MainWindow.slot_rename) # type: ignore
-        self.treeView_project.clicked['QModelIndex'].connect(MainWindow.slot_show_source_code) # type: ignore
+        self.pushButton_root.clicked.connect(MainWindow.set_project) # type: ignore
+        self.action_rename.triggered.connect(MainWindow.identifier_refactor) # type: ignore
+        self.treeView_project.clicked['QModelIndex'].connect(MainWindow.show_source_code) # type: ignore
+        self.action_move.triggered.connect(MainWindow.identifier_refactor) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
