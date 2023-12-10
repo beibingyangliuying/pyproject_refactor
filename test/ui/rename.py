@@ -1,5 +1,5 @@
 # -------------------------------------------------------------------------------
-# Name:        rename_dialog
+# Name:        rename
 # Purpose:     The dialog that perform renaming.
 #
 # Author:      chenjunhan
@@ -12,93 +12,53 @@
 The dialog that perform renaming.
 """
 import logging
-from PyQt6.QtWidgets import QDialog, QMessageBox, QWidget
+from typing import Union
+
 from PyQt6.QtCore import pyqtSlot
-from rope.refactor.rename import Rename
-from rope.base.project import Project
+from PyQt6.QtWidgets import QWidget
 from rope.base.resources import Resource
-from ui.ui_rename_dialog import Ui_Dialog
+from rope.base.project import Project
+from rope.refactor.rename import Rename
+from rope.base.change import ChangeSet
+
+from ui.generated.ui_rename import Ui_Dialog
+from ui.base import IdentifierRefactorDialog
 
 
-class RenameDialog(QDialog):
+class RenameDialog(IdentifierRefactorDialog):
     """
     The dialog that perform renaming.
     """
 
     def __init__(
-        self, parent: QWidget, project: Project, resource: Resource, offset=None
+        self,
+        parent: QWidget,
+        project: Project,
+        resource: Resource,
+        offset: Union[None, int],
     ):
-        super().__init__(parent)
+        super().__init__(parent, project, resource, offset)
+
+        # Initialize data context
+        self._rename = Rename(self._project, self._resource, self._offset)
+        logging.info("Rename on %s.", self._resource.path)
 
         # Initialize the interface
         self._ui = Ui_Dialog()
         self._ui.setupUi(self)
 
-        # Initialize data context
-        self._rename = Rename(project, resource, offset)
-        logging.info("Try to rename in %s.", self._module_name)
+        self._ui.lineEdit_module.setText(self._resource.path)
 
-        # Perform data binding
-        self._reset_binding()
-
-    def _reset_binding(self):
-        self._ui.lineEdit_module.setText(self._module_name)
+    @pyqtSlot()
+    def preview(self):
         self._ui.plainTextEdit.setPlainText(self._description)
-        logging.info("Class %s: Perform data binding.", RenameDialog)
-
-    @pyqtSlot()
-    def accept(self):
-        """
-        Execute renaming.
-        """
-        # Confirms whether to perform refactoring.
-        result = QMessageBox.question(
-            self,
-            "Question",
-            "Confirm refactoring?",
-            QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.No,
-        )
-        if not result:
-            return
-
-        try:
-            self._changes.do()
-            self.close()
-            logging.info("Rename in %s executed.", self._module_name)
-        except PermissionError as exception:
-            QMessageBox.warning(
-                self,
-                "Warning",
-                str(exception),
-                QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.No,
-            )
-
-    @pyqtSlot()
-    def cancel(self):
-        """
-        Cancel Renaming.
-        """
-        logging.info("Rename in %s canceled.", self._module_name)
-
-    @pyqtSlot()
-    def slot_set_new_name(self):
-        """
-        Re-preview the changes when finished entering the new name.
-        """
-        self._reset_binding()
 
     @property
-    def _module_name(self):
-        return self._rename.resource.path
-
-    @property
-    def _new_name(self):
+    def _new_name(self) -> str:
         return self._ui.lineEdit_new_name.text()
 
     @property
-    def _changes(self):
-        return self._rename.get_changes(self._new_name)
-
-    @property
-    def _description(self):
-        return self._changes.get_description()
+    def _changes(self) -> ChangeSet:
+        return self._rename.get_changes(
+            self._new_name, docs=self._ui.checkBox.isChecked()
+        )

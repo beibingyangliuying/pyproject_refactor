@@ -12,11 +12,13 @@
 Provides commonly used utilities.
 """
 import re
+from typing import Generator
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QStandardItem, QStandardItemModel
 from rope.base import libutils
 from rope.base.resources import Resource
+from rope.base.project import Project
 
 
 def is_validate_resource(resource: Resource) -> bool:
@@ -64,3 +66,16 @@ def get_project_model(root_resource: Resource) -> QStandardItemModel:
     root_item = model.invisibleRootItem()
     _recursive_traversal(root_resource, root_item)
     return model
+
+
+def get_packages(project: Project) -> Generator[Resource, None, None]:
+    for module in project.get_python_files():
+        if module.name == "__init__.py":
+            yield module.parent
+
+    yield project.root
+
+
+def get_modules(project: Project) -> Generator[Resource, None, None]:
+    for module in project.get_python_files():
+        yield module

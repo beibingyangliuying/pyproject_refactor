@@ -105,6 +105,10 @@ class Ui_MainWindow(object):
         self.menuHistory.setObjectName("menuHistory")
         self.menuRefactor = QtWidgets.QMenu(parent=self.menubar)
         self.menuRefactor.setObjectName("menuRefactor")
+        self.menuFile = QtWidgets.QMenu(parent=self.menubar)
+        self.menuFile.setObjectName("menuFile")
+        self.menuCreate = QtWidgets.QMenu(parent=self.menuFile)
+        self.menuCreate.setObjectName("menuCreate")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -141,8 +145,12 @@ class Ui_MainWindow(object):
         self.action_topackage.setObjectName("action_topackage")
         self.action_importutils = QtGui.QAction(parent=MainWindow)
         self.action_importutils.setObjectName("action_importutils")
-        self.menuHistory.addAction(self.action_undo)
+        self.action_create_package = QtGui.QAction(parent=MainWindow)
+        self.action_create_package.setObjectName("action_create_package")
+        self.action_create_module = QtGui.QAction(parent=MainWindow)
+        self.action_create_module.setObjectName("action_create_module")
         self.menuHistory.addAction(self.action_history)
+        self.menuHistory.addAction(self.action_undo)
         self.menuRefactor.addAction(self.action_rename)
         self.menuRefactor.addAction(self.action_move)
         self.menuRefactor.addAction(self.action_restructure)
@@ -155,8 +163,12 @@ class Ui_MainWindow(object):
         self.menuRefactor.addAction(self.action_introduce_parameter)
         self.menuRefactor.addAction(self.action_encapsulate_field)
         self.menuRefactor.addAction(self.action_localtofield)
-        self.menuRefactor.addAction(self.action_topackage)
         self.menuRefactor.addAction(self.action_importutils)
+        self.menuCreate.addAction(self.action_create_package)
+        self.menuCreate.addAction(self.action_create_module)
+        self.menuFile.addAction(self.menuCreate.menuAction())
+        self.menuFile.addAction(self.action_topackage)
+        self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHistory.menuAction())
         self.menubar.addAction(self.menuRefactor.menuAction())
 
@@ -165,6 +177,9 @@ class Ui_MainWindow(object):
         self.action_rename.triggered.connect(MainWindow.identifier_refactor) # type: ignore
         self.treeView_project.clicked['QModelIndex'].connect(MainWindow.show_source_code) # type: ignore
         self.action_move.triggered.connect(MainWindow.identifier_refactor) # type: ignore
+        self.action_create_module.triggered.connect(MainWindow.create_resource) # type: ignore
+        self.action_create_package.triggered.connect(MainWindow.create_resource) # type: ignore
+        self.action_topackage.triggered.connect(MainWindow.module2package) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -175,6 +190,8 @@ class Ui_MainWindow(object):
         self.label_source_code.setText(_translate("MainWindow", "Module Source Code"))
         self.menuHistory.setTitle(_translate("MainWindow", "History"))
         self.menuRefactor.setTitle(_translate("MainWindow", "Refactor"))
+        self.menuFile.setTitle(_translate("MainWindow", "File"))
+        self.menuCreate.setTitle(_translate("MainWindow", "Create"))
         self.action_history.setText(_translate("MainWindow", "history"))
         self.action_undo.setText(_translate("MainWindow", "undo"))
         self.action_rename.setText(_translate("MainWindow", "rename"))
@@ -205,3 +222,7 @@ class Ui_MainWindow(object):
         self.action_topackage.setToolTip(_translate("MainWindow", "Transform a module to a package with the same name."))
         self.action_importutils.setText(_translate("MainWindow", "importutils"))
         self.action_importutils.setToolTip(_translate("MainWindow", "Perform actions like organize imports."))
+        self.action_create_package.setText(_translate("MainWindow", "Create Package"))
+        self.action_create_package.setToolTip(_translate("MainWindow", "Create Package"))
+        self.action_create_module.setText(_translate("MainWindow", "Create Module"))
+        self.action_create_module.setToolTip(_translate("MainWindow", "Create Module"))

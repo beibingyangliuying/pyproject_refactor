@@ -17,10 +17,11 @@ import os
 from typing import Union
 
 from PyQt6.QtCore import QModelIndex, pyqtSlot, Qt
-from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QInputDialog
 from rope.base.exceptions import BadIdentifierError, ResourceNotFoundError
 from rope.base.project import Project
 from rope.base.resources import Resource
+from rope.refactor.topackage import ModuleToPackage
 
 from ui.rename import RenameDialog
 from ui.move import MoveDialog
@@ -52,6 +53,13 @@ class MainWindow(QMainWindow):
 
         # Perform data binding
         self._reset_binding()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._project.close()
+        logging.info("Project closed.")
 
     def _reset_binding(self):
         """
@@ -92,6 +100,11 @@ class MainWindow(QMainWindow):
             logging.warning(str(exception))
             return self._project.root
 
+    def _get_current_resource(self) -> Resource:
+        index = self._ui.treeView_project.currentIndex()
+        resource = self._get_resource(index)
+        return resource
+
     def _get_offset(self) -> Union[None, int]:
         text_edit = self._ui.plainTextEdit_source_code
         if not text_edit.hasFocus():
@@ -107,13 +120,13 @@ class MainWindow(QMainWindow):
         Reset the project root path.
         If the root path is reset, the operation history will be erased.
         """
-        ok = QMessageBox.question(
+        ifok = QMessageBox.question(
             self,
             "Question",
             "The history will be erased after resetting the root directory, continue?",
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
         )
-        if ok == QMessageBox.StandardButton.No:
+        if ifok == QMessageBox.StandardButton.No:
             return
 
         folder_path = QFileDialog.getExistingDirectory(
@@ -158,8 +171,7 @@ class MainWindow(QMainWindow):
         requires the `project`, `resource` and `offset` parameters.
         """
         # Determine resource.
-        index = self._ui.treeView_project.currentIndex()
-        resource = self._get_resource(index)
+        resource = self._get_current_resource()
         if resource == self._project.root:
             QMessageBox.information(
                 self,
@@ -191,4 +203,63 @@ class MainWindow(QMainWindow):
             QMessageBox.warning(self, "Warning", str(exception))
             return
         finally:
+            self._reset_binding()
+
+    @pyqtSlot()
+    def create_resource(self):
+        """
+        Create python file or package.
+        """
+        resource = self._get_current_resource()
+        if not resource.is_folder():
+            QMessageBox.information(
+                self,
+                "Information",
+                "Please select a python package!",
+                QMessageBox.StandardButton.Ok,
+            )
+            return
+
+        text, ifok = QInputDialog.getText(
+            self, "Enter Package/Module Name", "Package/Module Name"
+        )
+        if not ifok:
+            return
+
+        action_name = self.sender().objectName()
+        if action_name == "action_create_package":
+            folder = resource.create_folder(text)
+            folder.create_file("__init__.py")
+            logging.info("Create Package: %s", text)
+        elif action_name == "action_create_module":
+            resource.create_file(text + ".py")
+            logging.info("Create Module: %s", text)
+
+        self._reset_binding()
+
+    @pyqtSlot()
+    def module2package(self):
+        """
+        Convert a python module to a package.
+        """
+        resource = self._get_current_resource()
+        if resource.is_folder() or resource.name == "__init__.py":
+            QMessageBox.information(
+                self,
+                "Information",
+                "Please select a python module!",
+                QMessageBox.StandardButton.Ok,
+            )
+            return
+
+        refactor = ModuleToPackage(self._project, resource)
+        changes = refactor.get_changes()
+        ifok = QMessageBox.question(
+            self,
+            "Question",
+            "Preview:\n" + changes.get_description(),
+            QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.No,
+        )
+        if ifok == QMessageBox.StandardButton.Ok:
+            changes.do()
             self._reset_binding()

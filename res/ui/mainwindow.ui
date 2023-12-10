@@ -163,8 +163,8 @@
     <property name="title">
      <string>History</string>
     </property>
-    <addaction name="action_undo"/>
     <addaction name="action_history"/>
+    <addaction name="action_undo"/>
    </widget>
    <widget class="QMenu" name="menuRefactor">
     <property name="title">
@@ -182,9 +182,23 @@
     <addaction name="action_introduce_parameter"/>
     <addaction name="action_encapsulate_field"/>
     <addaction name="action_localtofield"/>
-    <addaction name="action_topackage"/>
     <addaction name="action_importutils"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuCreate">
+     <property name="title">
+      <string>Create</string>
+     </property>
+     <addaction name="action_create_package"/>
+     <addaction name="action_create_module"/>
+    </widget>
+    <addaction name="menuCreate"/>
+    <addaction name="action_topackage"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuHistory"/>
    <addaction name="menuRefactor"/>
   </widget>
@@ -311,6 +325,22 @@
     <string>Perform actions like organize imports.</string>
    </property>
   </action>
+  <action name="action_create_package">
+   <property name="text">
+    <string>Create Package</string>
+   </property>
+   <property name="toolTip">
+    <string>Create Package</string>
+   </property>
+  </action>
+  <action name="action_create_module">
+   <property name="text">
+    <string>Create Module</string>
+   </property>
+   <property name="toolTip">
+    <string>Create Module</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -378,10 +408,60 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_create_module</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>create_resource()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_create_package</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>create_resource()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_topackage</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>module2package()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>418</x>
+     <y>301</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>set_project()</slot>
   <slot>show_source_code(QModelIndex)</slot>
   <slot>identifier_refactor()</slot>
+  <slot>create_resource()</slot>
+  <slot>module2package()</slot>
  </slots>
 </ui>

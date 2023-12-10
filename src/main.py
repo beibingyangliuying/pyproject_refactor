@@ -27,9 +27,9 @@ def main():
     Application Main Entrance.
     """
     app = QApplication(sys.argv)
-    mainwindow = MainWindow()
-    mainwindow.show()
-    app.exec()
+    with MainWindow() as mainwindow:
+        mainwindow.show()
+        app.exec()
 
 
 if __name__ == "__main__":

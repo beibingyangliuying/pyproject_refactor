@@ -5,4 +5,6 @@ Classes in other modules, such as `mainwindow.MainWindow`, inherit from `ui_main
 , and so on.
 """
 
+from ui.mainwindow import MainWindow
 from ui.rename import RenameDialog
+from ui.move import MoveDialog
