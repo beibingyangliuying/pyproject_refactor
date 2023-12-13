@@ -20,6 +20,7 @@ from rope.refactor.move import create_move, MoveGlobal, MoveModule, MoveMethod
 from rope.base.resources import Resource
 from rope.base.project import Project
 from rope.base.change import ChangeSet
+from rope.base.exceptions import RefactoringError
 
 from ui.generated.ui_move import Ui_Dialog
 from ui.base import IdentifierRefactorDialog
@@ -86,7 +87,7 @@ class MoveDialog(IdentifierRefactorDialog):
     def preview(self):
         try:
             description = self._description
-        except Exception as exception:  # todo:Capture exceptions at a finer level.
+        except RefactoringError as exception:
             QMessageBox.warning(
                 self, "Warning", str(exception), QMessageBox.StandardButton.Ok
             )

@@ -58,8 +58,8 @@ class MainWindow(QMainWindow):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        logging.info("Project <%s> closed.",self._project.address)
         self._project.close()
-        logging.info("Project closed.")
 
     def _reset_binding(self):
         """
@@ -134,8 +134,9 @@ class MainWindow(QMainWindow):
         )
 
         if folder_path:
-            logging.info("Set Root Directory: %s", folder_path)
+            logging.info('Project <%s> closed. Set Root Directory: %s',self._project.address,folder_path)
 
+            self._project.close()
             self._project = Project(folder_path)
             self._reset_binding()
 
